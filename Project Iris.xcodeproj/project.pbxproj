@@ -152,7 +152,7 @@
 		E95A20B22CBC1709001B6336 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E95EB6A22D4553460060299E /* CorvusReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorvusReportView.swift; sourceTree = "<group>"; };
 		E9625B972C9D8DEC00604100 /* TroubleshooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshooterView.swift; sourceTree = "<group>"; };
-		E9639BE12C971AE000B83FF8 /* Core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; };
+		E9639BE12C971AE000B83FF8 /* Core.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = Core.swift; sourceTree = "<group>"; tabWidth = 2; };
 		E9639BE32C971C2F00B83FF8 /* DimmingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimmingView.swift; sourceTree = "<group>"; };
 		E9639BE52C972C8500B83FF8 /* VoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteView.swift; sourceTree = "<group>"; };
 		E96A05852C8D73780018FEB0 /* SettingsInterfaceAdvancedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInterfaceAdvancedView.swift; sourceTree = "<group>"; };
@@ -668,7 +668,7 @@
 		E9BA100E2C8C8818007C83CC /* WKWebViewConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKWebViewConfiguration.h; sourceTree = "<group>"; };
 		E9BA100F2C8C8818007C83CC /* WKWindowFeatures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKWindowFeatures.h; sourceTree = "<group>"; };
 		E9BA10112C8C8B49007C83CC /* Project Iris Watch App-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Project Iris Watch App-Bridging-Header.h"; sourceTree = "<group>"; };
-		E9BA10172C8C9624007C83CC /* WebpageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebpageView.swift; sourceTree = "<group>"; };
+		E9BA10172C8C9624007C83CC /* WebpageView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = WebpageView.swift; sourceTree = "<group>"; tabWidth = 2; };
 		E9E21FDB2C3AED4100C8161C /* NewFearturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFearturesView.swift; sourceTree = "<group>"; };
 		E9EBFB8B2C39520C00E16268 /* CreditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditView.swift; sourceTree = "<group>"; };
 		E9F619BC2C4104DD00B754A3 /* unlockTip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = unlockTip.wav; sourceTree = "<group>"; };

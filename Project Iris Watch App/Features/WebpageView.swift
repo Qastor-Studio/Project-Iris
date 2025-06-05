@@ -40,7 +40,7 @@ struct SwiftWebView: View {
   @State var bookmarksAdded = false
   @State var archiveAdded = false
   @State var archiveUpdated = false
-  @State var mediaLists: ([URL], [URL], [URL]) = ([], [], [])
+  @State var mediaLists = FullMediaList()
   @State var isEditedURLValid = false
   //  @State var largeImageViewIsDisplaying = false
   
@@ -353,24 +353,24 @@ struct SwiftWebView: View {
                 })
               }
             }
-            if !mediaLists.0.isEmpty || !mediaLists.1.isEmpty || !mediaLists.2.isEmpty {
+            if !mediaLists.isEmpty {
               Section {
-                if !mediaLists.0.isEmpty {
+                if !mediaLists.images.isEmpty {
                   NavigationLink(destination: {
                     List {
                       Section(content: {
-                      ForEach(0..<mediaLists.0.count, id: \.self) { imageIndex in
-                        NavigationLink(destination: {
-                          ImageView(urlSet: mediaLists.0, urlIndex: imageIndex)
-                        }, label: {
-                          HStack {
-                            Text("\(mediaLists.0[imageIndex])")
-                              .font(.caption)
-                              .lineLimit(2)
-                              .truncationMode(.head)
-                            Spacer()
-                            AsyncImage(url: mediaLists.0[imageIndex]) { phase in
-                              switch phase {
+                        ForEach(0..<mediaLists.images.count, id: \.self) { imageIndex in
+                          NavigationLink(destination: {
+                            ImageView(urlSet: mediaLists.images, urlIndex: imageIndex)
+                          }, label: {
+                            HStack {
+                              Text("\(mediaLists.images[imageIndex])")
+                                .font(.caption)
+                                .lineLimit(2)
+                                .truncationMode(.head)
+                              Spacer()
+                              AsyncImage(url: mediaLists.images[imageIndex]) { phase in
+                                switch phase {
                                 case .empty:
                                   RoundedRectangle(cornerRadius: 5)
                                     .foregroundStyle(.secondary)
@@ -386,27 +386,28 @@ struct SwiftWebView: View {
                                     }
                                 @unknown default:
                                   EmptyView()
+                                }
                               }
+                              .frame(width: 30, height: 30)
                             }
-                            .frame(width: 30, height: 30)
-                          }
-                        })
-                      }
+                          })
+                        }
                       }, footer: {
-//                        Text("Webpage.media.images.count.\(mediaLists.0.count)")
+//                        Text("Webpage.media.images.count.\(mediaLists.images.count)")
                       })
                     }
                     .navigationTitle("Webpage.media.images")
                   }, label: {
-                    Label("Webpage.media.images.\(mediaLists.0.count)", systemImage: "photo.on.rectangle.angled")
+                    Label("Webpage.media.images.\(mediaLists.images.count)", systemImage: "photo.on.rectangle.angled")
                   })
                 }
-                if !mediaLists.1.isEmpty {
+                if !mediaLists.videos.isEmpty {
+                  // TODO: Add video list UI.
                   if debug {
 //                    NavigationLink(destination: {
 //                      
 //                    }, label: {
-////                      Label("Webpage.media.videos.\(mediaLists.1.count)", systemImage: "film.stack")
+////                      Label("Webpage.media.videos.\(mediaLists.videos.count)", systemImage: "film.stack")
 //                    })
                   }
                 }
@@ -824,14 +825,14 @@ func doesRegexMatch(_ regexPattern: String, text: String) -> Bool {
   }
 }
 
-func getMediaList(_ url: URL, completion: @escaping (([URL], [URL], [URL])) -> Void) {
+func getMediaList(_ url: URL, completion: @escaping (FullMediaList) -> Void) {
   fetchWebPageContent(urlString: url.absoluteString, completion: { result in
     switch result {
       case .success(let content):
         
         completion(parseMediasFromHTML(content, baseURL: url))
       case .failure(_):
-        completion(([], [], []))
+      completion(.init())
     }
   })
 }
