@@ -180,25 +180,174 @@ func getTopLevel(from url: String) -> String? {
   return nil
 }
 
-func parseMediasFromHTML(_ htmlContent: String, baseURL: URL) -> ([URL], [URL], [URL]) {
+func parseMediasFromHTML(_ htmlContent: String, baseURL: URL) -> FullMediaList {
   do {
     let document = try SwiftSoup.parse(htmlContent)
     
-    let images = try document.select("img").array().compactMap { try $0.attr("src") }
-    let videos = try document.select("video").array().compactMap { try $0.attr("src") }
-    let audios = try document.select("audio").array().compactMap { try $0.attr("src") }
+    let webSuffixList = [".html", ".htm", ".php", ".xhtml"]
     
-    let fullImageUrls = images.compactMap { getMediaCompleteURL(baseURL, $0) }
-    let fullVideoUrls = videos.compactMap { getMediaCompleteURL(baseURL, $0) }
-    let fullAudioUrls = audios.compactMap { getMediaCompleteURL(baseURL, $0) }
+    var imageURLs = [URL]()
+    var videoURLs = [URL]()
+    var audioURLs = [URL]()
+    
+    // This code snippet is from https://github.com/Darock-Studio/Watch-Browser (MODIFIED)
+    // WindowsMEMZ specially licensed this snippet to Project Iris under Unlicense License.
+    // If you planned to use this code snippet in any other project,
+    // you MUST compliance with the original license of Project Iris
+    // (not Unlicense License).
+    let videos = try document.body()?.select("video")
+    if let videos {
+      var srcs = [String]()
+      for video in videos {
+        var src = try video.attr("src")
+        if src.isEmpty, let tagSrc = try? video.select("source") {
+          src = try tagSrc.attr("src")
+        }
+        if !src.isEmpty {
+          if src.hasPrefix("/") {
+            if baseURL.absoluteString.split(separator: "/").count < 2 {
+              continue
+            }
+            src = "http://" + baseURL.absoluteString.split(separator: "/")[1] + src
+          } else if !src.hasPrefix("http://") && !src.hasPrefix("https://") {
+            var currentUrlCopy = baseURL.absoluteString
+            if webSuffixList.contains(where: { element in currentUrlCopy.hasSuffix(element) }) {
+              if currentUrlCopy.split(separator: "/").count < 2 {
+                continue
+              }
+              currentUrlCopy = currentUrlCopy.components(separatedBy: "/").dropLast().joined(separator: "/")
+            }
+            if !currentUrlCopy.hasSuffix("/") {
+              currentUrlCopy += "/"
+            }
+            src = currentUrlCopy + src
+          }
+          srcs.append(src)
+        }
+      }
+      videoURLs = srcs.compactMap { URL(string: $0) }
+    }
+    let iframeVideos = try document.body()?.select("iframe")
+    if let iframeVideos {
+      var srcs = [String]()
+      for video in iframeVideos {
+        var src = try video.attr("src")
+        if src != "" && (src.hasSuffix(".mp4") || src.hasSuffix(".m3u8")) {
+          if src.split(separator: "://").count >= 2 && !src.hasPrefix("http://") && !src.hasPrefix("https://") {
+            src = "https://" + src.split(separator: "://").last!
+          } else if src.hasPrefix("/") {
+            if baseURL.absoluteString.split(separator: "/").count < 2 {
+              continue
+            }
+            src = "https://" + baseURL.absoluteString.split(separator: "/")[1] + src
+          }
+          srcs.append(src)
+        }
+      }
+      videoURLs += srcs.compactMap { URL(string: $0) }
+    }
+    let aLinks = try document.body()?.select("a")
+    if let aLinks {
+      var srcs = [String]()
+      for video in aLinks {
+        var src = try video.attr("href")
+        if src != "" && (src.hasSuffix(".mp4") || src.hasSuffix(".m3u8")) {
+          if src.split(separator: "://").count >= 2 && !src.hasPrefix("http://") && !src.hasPrefix("https://") {
+            src = "https://" + src.split(separator: "://").last!
+          } else if src.hasPrefix("/") {
+            if baseURL.absoluteString.split(separator: "/").count < 2 {
+              continue
+            }
+            src = "https://" + baseURL.absoluteString.split(separator: "/")[1] + src
+          }
+          srcs.append(src)
+        }
+      }
+      videoURLs += srcs.compactMap { URL(string: $0) }
+    }
+    let images = try document.body()?.select("img")
+    if let images {
+      var srcs = [String]()
+      for image in images {
+        var src = try image.attr("src")
+        if src != "" {
+          if src.hasPrefix("/") {
+            if baseURL.absoluteString.split(separator: "/").count < 2 {
+              continue
+            }
+            src = "http://" + baseURL.absoluteString.split(separator: "/")[1] + src
+          } else if !src.hasPrefix("http://") && !src.hasPrefix("https://") {
+            var currentUrlCopy = baseURL.absoluteString
+            if webSuffixList.contains(where: { element in currentUrlCopy.hasSuffix(element) }) {
+              if currentUrlCopy.split(separator: "/").count < 2 {
+                continue
+              }
+              currentUrlCopy = currentUrlCopy.components(separatedBy: "/").dropLast().joined(separator: "/")
+            }
+            if !currentUrlCopy.hasSuffix("/") {
+              currentUrlCopy += "/"
+            }
+            src = currentUrlCopy + src
+          }
+          srcs.append(src)
+        }
+      }
+      imageURLs = srcs.compactMap { URL(string: $0) }
+    }
+    let audios = try document.body()?.select("audio")
+    if let audios {
+      var srcs = [String]()
+      for audio in audios {
+        var src = try audio.attr("src")
+        if src != "" {
+          if src.hasPrefix("/") {
+            if baseURL.absoluteString.split(separator: "/").count < 2 {
+              continue
+            }
+            src = "http://" + baseURL.absoluteString.split(separator: "/")[1] + src
+          } else if !src.hasPrefix("http://") && !src.hasPrefix("https://") {
+            var currentUrlCopy = baseURL.absoluteString
+            if webSuffixList.contains(where: { element in currentUrlCopy.hasSuffix(element) }) {
+              if currentUrlCopy.split(separator: "/").count < 2 {
+                continue
+              }
+              currentUrlCopy = currentUrlCopy.components(separatedBy: "/").dropLast().joined(separator: "/")
+            }
+            if !currentUrlCopy.hasSuffix("/") {
+              currentUrlCopy += "/"
+            }
+            src = currentUrlCopy + src
+          }
+          srcs.append(src)
+        }
+      }
+      audioURLs = srcs.compactMap { URL(string: $0) }
+    }
     
     //MARK: IMPORTANT
 //    print("Images:", fullImageUrls)
 //    print("Videos:", fullVideoUrls)
 //    print("Audios:", fullAudioUrls)
-    return (fullImageUrls, fullVideoUrls, fullAudioUrls)
+    return .init(images: imageURLs, videos: videoURLs, audios: audioURLs)
   } catch {
-    return ([], [], [])
+    return .init()
+  }
+}
+
+struct FullMediaList {
+  var images: [URL]
+  var videos: [URL]
+  var audios: [URL]
+  
+  var isEmpty: Bool {
+    images.isEmpty && videos.isEmpty && audios.isEmpty
+  }
+}
+extension FullMediaList {
+  init() {
+    images = []
+    videos = []
+    audios = []
   }
 }
 
