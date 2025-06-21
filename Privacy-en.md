@@ -1,5 +1,5 @@
 # Privacy Policy
-Thank you for choosing and using Iris (Project Iris App). In Serene Garden, we believe that privacy is a basic human right, everyone should have their rights to know and manage their own datas. We respect users' right of privacy, Iris will not collect unnecessary information, or collect informations when you don't know.
+Thank you for choosing and using Iris (Project Iris App). In Qastor, we believe that privacy is a basic human right, everyone should have their rights to know and manage their own datas. We respect users' right of privacy, Iris will not collect unnecessary information, or collect informations when you don't know.
 
 This document may be changed without noticing.
 
@@ -18,7 +18,7 @@ When you agree, your action may be recorded when you access specific pages or jo
 
 The only purpose for statistics is to learn user's preferences. This data is not linked to your identity. Which means statistics are fully anonymous and we cannot infer or track your identity from it.
 
-All statistic datas will not be sent to third parties other than Serene Garden and Darock, and will not be used to create user image or advertising.
+All statistic datas will not be sent to third parties other than Qastor and Darock, and will not be used to create user image or advertising.
 
 Darock had promised not to use statistic datas for other reasons other than learning user preferences.
 
@@ -32,19 +32,15 @@ Iris is not responsible for the content on the Internet or the actions you do on
 ## Carina and Data Sending
 Your App-related data will be send together when creating new Carina feedback. Your Iris version and system version will be sent with content together when you reply a feedback.
 
-All feedback content will not be linked to your identity. But your IP address may be recorded due to security reasons.
+Your IP address may be recorded for security reasons.
 
-Feedback datas will be sent and stored at Darock Server, also won't be sent to third parties other than Serene Garden and Darock, and will not be used to create user image or advertising.
-
-Attaching may help us diagnose. 3 webpages that you've viewed recently may be added by default, and you may remove them at any time. Your history, bookmarks, contents of archives, extension codes, location, appearence changing time, and passcode won't appear in Settings Values. Your archive list (title, URL, last update date), extensions list and votings info may include in Settings Values. We won't discriminate according to your Settings Values. (We never discriminate.)
+Feedback datas will be sent and stored at Darock Server, also won't be sent to third parties other than Qastor and Darock, and will not be used to create user image or advertising.
 
 Your geographical location and passcode will never be sent, no matter how.
 
-Your stored datas (homepage, bookmarks, history, archive, extensions, etc.) will never be read by us remotely.
-
 When Iris crashes, you can choose to report. The report will carry on all the attachments by default, you cannot track the report.
 
-In order to confirm sender, your feedback will be appended with a token when sending. This token is unique per device, and we a re unable to know your identity.
+All data that will be sent will be showed on the screen for you to confirm.
 
 ## Votings
 You might see votings sometimes. Votings is a major reference for Iris future updates.
