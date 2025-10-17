@@ -707,10 +707,10 @@ HistoryFile：\(readPlainTextFile("historyData.txt").replacingOccurrences(of: "\
 }
 
 
-func getAccessibilityInfos() -> String {
-  let assistiveTouch = UIAccessibilityIsAssistiveTouchRunning()
-  return ""
-}
+//func getAccessibilityInfos() -> String {
+//  let assistiveTouch = UIAccessibilityIsAssistiveTouchRunning()
+//  return ""
+//}
 
 func stringToStringArray(_ input: String) -> [String]? {
   var source = input
