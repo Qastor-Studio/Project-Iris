@@ -109,6 +109,7 @@ struct CreditView: View {
             } else {
               Label("Credit.footer.inspiration", systemImage: "lightbulb")
             }
+              Text("Credit.footer.bad-localization")
 //            Label("Credit.footer.legality", systemImage: "building.columns.fill")
           }
         })
